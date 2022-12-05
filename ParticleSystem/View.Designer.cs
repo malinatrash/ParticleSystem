@@ -47,7 +47,7 @@
             this.picDisplay.Location = new System.Drawing.Point(0, 0);
             this.picDisplay.Margin = new System.Windows.Forms.Padding(0);
             this.picDisplay.Name = "picDisplay";
-            this.picDisplay.Size = new System.Drawing.Size(808, 450);
+            this.picDisplay.Size = new System.Drawing.Size(946, 502);
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
             this.picDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseMove);
@@ -60,10 +60,10 @@
             // 
             // ChooseGifButton
             // 
-            this.ChooseGifButton.Location = new System.Drawing.Point(710, 6);
+            this.ChooseGifButton.Location = new System.Drawing.Point(788, 10);
             this.ChooseGifButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ChooseGifButton.Name = "ChooseGifButton";
-            this.ChooseGifButton.Size = new System.Drawing.Size(91, 42);
+            this.ChooseGifButton.Size = new System.Drawing.Size(145, 42);
             this.ChooseGifButton.TabIndex = 1;
             this.ChooseGifButton.Text = "Выбрать гифку";
             this.ChooseGifButton.UseVisualStyleBackColor = true;
@@ -71,10 +71,10 @@
             // 
             // ChooseMusicButton
             // 
-            this.ChooseMusicButton.Location = new System.Drawing.Point(710, 50);
+            this.ChooseMusicButton.Location = new System.Drawing.Point(788, 54);
             this.ChooseMusicButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ChooseMusicButton.Name = "ChooseMusicButton";
-            this.ChooseMusicButton.Size = new System.Drawing.Size(91, 42);
+            this.ChooseMusicButton.Size = new System.Drawing.Size(145, 42);
             this.ChooseMusicButton.TabIndex = 2;
             this.ChooseMusicButton.Text = "Выбрать музыку";
             this.ChooseMusicButton.UseVisualStyleBackColor = true;
@@ -83,9 +83,9 @@
             // backgroudList
             // 
             this.backgroudList.FormattingEnabled = true;
-            this.backgroudList.Location = new System.Drawing.Point(710, 96);
+            this.backgroudList.Location = new System.Drawing.Point(788, 100);
             this.backgroudList.Name = "backgroudList";
-            this.backgroudList.Size = new System.Drawing.Size(91, 23);
+            this.backgroudList.Size = new System.Drawing.Size(145, 23);
             this.backgroudList.TabIndex = 3;
             this.backgroudList.SelectedIndexChanged += new System.EventHandler(this.BackgroudListSelectedIndexChanged);
             // 
@@ -94,7 +94,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(808, 450);
+            this.ClientSize = new System.Drawing.Size(944, 501);
             this.Controls.Add(this.backgroudList);
             this.Controls.Add(this.ChooseMusicButton);
             this.Controls.Add(this.ChooseGifButton);

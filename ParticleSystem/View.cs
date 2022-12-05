@@ -19,10 +19,11 @@ namespace ParticleSystem
         private readonly string niggaBackground = "niggaDance.gif";
         private readonly string nagievBackground = "nagiev.gif";
         private readonly string chickaBackground = "FujiwaraChicka.gif";
-        private readonly string flexBackground = "flex-dance.gif";
-        private readonly string flexRedBackground = "flex.gif";
         private readonly string tortureDanceBackground = "tortureDance.gif";
+        private readonly string hayaBackground = "haya.gif";
         private readonly string musicPath = "back.mp3.m4a";
+        private readonly string dancingMusic = "dancin.mp3";
+        private readonly string hayaMusic = "haya.mp3.m4a";
         private readonly string tortureDanceMusic = "torture.m4a.mp3.m4a";
 
         private WMPLib.WindowsMediaPlayer music = new WMPLib.WindowsMediaPlayer();
@@ -34,6 +35,7 @@ namespace ParticleSystem
 
             SetMusic(null);
             backgroudList.SelectedIndex = 0;
+            backgroudList.AllowDrop = false;
             //SetBackground(null, false);
 
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
@@ -58,8 +60,8 @@ namespace ParticleSystem
             backgroudList.Items.Add("Torture dance");
             backgroudList.Items.Add("Нагиев");
             backgroudList.Items.Add("Чика");
-            backgroudList.Items.Add("Флекс");
-            backgroudList.Items.Add("Флекс (дикий)");
+            backgroudList.Items.Add("HEYYEYAAEYAAAEYAEYAA");
+            
             backgroudList.SelectedIndex = 0;
         }
 
@@ -181,6 +183,8 @@ namespace ParticleSystem
             if (backgroudList.SelectedIndex == 0)
             {
                 SetBackground(niggaBackground, true);
+                SetMusic(musicPath);
+                timer.Interval = 25;
             }
             if (backgroudList.SelectedIndex == 1)
             {
@@ -191,19 +195,22 @@ namespace ParticleSystem
             else if (backgroudList.SelectedIndex == 2)
             {
                 SetBackground(nagievBackground, false);
+                SetMusic(musicPath);
+                timer.Interval = 17;
             }
             else if (backgroudList.SelectedIndex == 3)
             {
                 SetBackground(chickaBackground, false);
+                SetMusic(dancingMusic);
+                timer.Interval = 30;
             }
             else if (backgroudList.SelectedIndex == 4)
             {
-                SetBackground(flexBackground, false);
+                SetBackground(hayaBackground, false);
+                SetMusic(hayaMusic);
+                timer.Interval = 94;
             }
-            else if (backgroudList.SelectedIndex == 5)
-            {
-                SetBackground(flexRedBackground, false);
-            }
+
         }
     }
 }
