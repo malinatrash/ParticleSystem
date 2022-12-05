@@ -16,15 +16,25 @@ namespace ParticleSystem
         Emitter emitter = new();
         private GifImage gifImage;
         //private readonly string filePath = "C:\\niggaDance.gif";
-        private readonly string filePath = "C:\\niggaDance.gif";
-        private readonly string musicPath = "C:\\back.mp3.m4a";
+        private readonly string niggaBackground = "niggaDance.gif";
+        private readonly string nagievBackground = "nagiev.gif";
+        private readonly string chickaBackground = "FujiwaraChicka.gif";
+        private readonly string flexBackground = "flex-dance.gif";
+        private readonly string flexRedBackground = "flex.gif";
+        private readonly string tortureDanceBackground = "tortureDance.gif";
+        private readonly string musicPath = "back.mp3.m4a";
+        private readonly string tortureDanceMusic = "torture.m4a.mp3.m4a";
+
         private WMPLib.WindowsMediaPlayer music = new WMPLib.WindowsMediaPlayer();
         public View()
         {
             InitializeComponent();
 
+            SetupBackgroudList();
+
             SetMusic(null);
-            SetBackground(null);
+            backgroudList.SelectedIndex = 0;
+            //SetBackground(null, false);
 
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
             
@@ -40,6 +50,17 @@ namespace ParticleSystem
             emitter.gravityPoints.Add(new Point(
                (int)(picDisplay.Width * 0.25), picDisplay.Height / 2
             ));
+        }
+
+        private void SetupBackgroudList()
+        {
+            backgroudList.Items.Add("1 + 1");
+            backgroudList.Items.Add("Torture dance");
+            backgroudList.Items.Add("Нагиев");
+            backgroudList.Items.Add("Чика");
+            backgroudList.Items.Add("Флекс");
+            backgroudList.Items.Add("Флекс (дикий)");
+            backgroudList.SelectedIndex = 0;
         }
 
         private void SaveToFile(string path)
@@ -66,33 +87,33 @@ namespace ParticleSystem
         }
 
 
-        private void SetBackground(string? file)
+        private void SetBackground(string? file, bool isReversed)
         {
-            picDisplay.BackgroundImage = Image.FromFile(filePath);
+            picDisplay.BackgroundImage = Image.FromFile(niggaBackground);
             picDisplay.SizeMode = PictureBoxSizeMode.StretchImage;
             if (file == null)
             {
-                if (File.Exists(filePath+".gi"))
+                if (File.Exists(niggaBackground+".gi"))
                 {
-                    gifImage = new GifImage(LoadFromFile(filePath), filePath);
-                    gifImage.ReverseAtEnd = true;
+                    gifImage = new GifImage(LoadFromFile(niggaBackground), niggaBackground);
+                    gifImage.ReverseAtEnd = isReversed;
                 } else
                 {
-                    gifImage = new GifImage(filePath);
-                    gifImage.ReverseAtEnd = true;
-                    SaveToFile(filePath);
+                    gifImage = new GifImage(niggaBackground);
+                    gifImage.ReverseAtEnd = isReversed;
+                    SaveToFile(niggaBackground);
                 }
             } else
             {
                 if (File.Exists(file + ".gi"))
                 {
                     gifImage = new GifImage(LoadFromFile(file), file);
-                    gifImage.ReverseAtEnd = true;
+                    gifImage.ReverseAtEnd = isReversed;
                 }
                 else
                 {
                     gifImage = new GifImage(file);
-                    gifImage.ReverseAtEnd = true;
+                    gifImage.ReverseAtEnd = isReversed;
                     SaveToFile(file);
                 }
             }
@@ -116,7 +137,7 @@ namespace ParticleSystem
 
         private void DoTick(object sender, EventArgs e)
         {
-          picDisplay.BackgroundImage = gifImage.GetNextFrame();
+            picDisplay.BackgroundImage = gifImage.GetNextFrame();
 
             emitter.UpdateState();
 
@@ -125,12 +146,9 @@ namespace ParticleSystem
                 g.Clear(Color.FromArgb(0, 0, 0, 0));
                 emitter.Render(g);
             }
-            picDisplay.Invalidate();
+            picDisplay.Invalidate(); 
 
-            if (!music.enabled)
-            {
-                music.controls.play();
-            }
+            
         }
 
         private new void MouseMove(object sender, MouseEventArgs e)
@@ -154,7 +172,37 @@ namespace ParticleSystem
             OpenFileDialog dialog = new();
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                SetBackground(dialog.FileName);
+                SetBackground(dialog.FileName, false);
+            }
+        }
+
+        private void BackgroudListSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (backgroudList.SelectedIndex == 0)
+            {
+                SetBackground(niggaBackground, true);
+            }
+            if (backgroudList.SelectedIndex == 1)
+            {
+                SetBackground(tortureDanceBackground, false);
+                SetMusic(tortureDanceMusic);
+                timer.Interval = 94;
+            }
+            else if (backgroudList.SelectedIndex == 2)
+            {
+                SetBackground(nagievBackground, false);
+            }
+            else if (backgroudList.SelectedIndex == 3)
+            {
+                SetBackground(chickaBackground, false);
+            }
+            else if (backgroudList.SelectedIndex == 4)
+            {
+                SetBackground(flexBackground, false);
+            }
+            else if (backgroudList.SelectedIndex == 5)
+            {
+                SetBackground(flexRedBackground, false);
             }
         }
     }
