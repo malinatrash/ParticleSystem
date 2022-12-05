@@ -58,9 +58,9 @@ namespace ParticleSystem
                 }
             }
 
-            for (var i = 0; i < 17; ++i)
+            for (var i = 0; i < 100; ++i)
             {
-                if (particles.Count < 500)
+                if (particles.Count < 2000)
                 {
                     var particle = new ParticleColorful();
                     particle.FromColor = Color.Yellow;

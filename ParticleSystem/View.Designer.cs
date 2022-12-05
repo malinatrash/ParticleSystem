@@ -46,7 +46,7 @@
             this.picDisplay.Location = new System.Drawing.Point(0, 0);
             this.picDisplay.Margin = new System.Windows.Forms.Padding(0);
             this.picDisplay.Name = "picDisplay";
-            this.picDisplay.Size = new System.Drawing.Size(1310, 960);
+            this.picDisplay.Size = new System.Drawing.Size(1501, 960);
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
             this.picDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseMove);
@@ -54,21 +54,22 @@
             // timer
             // 
             this.timer.Enabled = true;
-            this.timer.Interval = 20;
+            this.timer.Interval = 16;
             this.timer.Tick += new System.EventHandler(this.DoTick);
             // 
             // ChooseGifButton
             // 
-            this.ChooseGifButton.Location = new System.Drawing.Point(1348, 25);
+            this.ChooseGifButton.Location = new System.Drawing.Point(1338, 12);
             this.ChooseGifButton.Name = "ChooseGifButton";
             this.ChooseGifButton.Size = new System.Drawing.Size(150, 89);
             this.ChooseGifButton.TabIndex = 1;
             this.ChooseGifButton.Text = "Выбрать гифку";
             this.ChooseGifButton.UseVisualStyleBackColor = true;
+            this.ChooseGifButton.Click += new System.EventHandler(this.ChooseGifButtonPressed);
             // 
             // ChooseMusicButton
             // 
-            this.ChooseMusicButton.Location = new System.Drawing.Point(1348, 141);
+            this.ChooseMusicButton.Location = new System.Drawing.Point(1338, 107);
             this.ChooseMusicButton.Name = "ChooseMusicButton";
             this.ChooseMusicButton.Size = new System.Drawing.Size(150, 89);
             this.ChooseMusicButton.TabIndex = 2;
@@ -81,7 +82,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(1543, 960);
+            this.ClientSize = new System.Drawing.Size(1500, 960);
             this.Controls.Add(this.ChooseMusicButton);
             this.Controls.Add(this.ChooseGifButton);
             this.Controls.Add(this.picDisplay);

@@ -16,16 +16,25 @@ namespace ParticleSystem
         private bool reverse;
         private int step = 1;
         private List<Image> frameList = new();
+        private Boolean isEven = false;
 
         public GifImage(string path)
         {
             gifImage = Image.FromFile(path);
             dimension = new FrameDimension(gifImage.FrameDimensionsList[0]);
             frameCount = gifImage.GetFrameCount(dimension);
-            frameList = GetFrameList();
+            frameList = FrameList();
         }
 
-        private List<Image> GetFrameList()
+        public GifImage(List<Image> list, string path)
+        {
+            gifImage = Image.FromFile(path);
+            dimension = new FrameDimension(gifImage.FrameDimensionsList[0]);
+            frameCount = gifImage.GetFrameCount(dimension);
+            frameList = list;
+        }
+
+        private List<Image> FrameList()
         {
             List<Image> list = new List<Image>();
             for (int i = 0; i < frameCount; i++)
@@ -33,6 +42,11 @@ namespace ParticleSystem
                 list.Add(GetFrame(i));
             }
             return list;
+        }
+
+        public List<Image> GetFrameList()
+        {
+            return frameList;
         }
 
         public bool ReverseAtEnd
@@ -49,7 +63,14 @@ namespace ParticleSystem
 
         public Image GetNextFrame()
         {
-
+            //if (isEven)
+            // {
+            //     isEven = false;
+            // } else
+            // {
+            //      currentFrame += step;
+            //      isEven = true;
+            //   }
             currentFrame += step;
 
             if (currentFrame >= frameCount || currentFrame < 0)
@@ -61,10 +82,14 @@ namespace ParticleSystem
                 }
                 else
                 {
+
                     currentFrame = 0;
                 }
             }
-            return ReplaceFrame(currentFrame);
+           
+                return ReplaceFrame(currentFrame);
+            
+            
             //return GetFrame(currentFrame);
         }
 
