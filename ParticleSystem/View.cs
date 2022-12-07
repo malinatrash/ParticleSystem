@@ -1,21 +1,17 @@
-using GES;
-using Microsoft.VisualBasic.Devices;
-using System.Media;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Windows.Forms;
-using VisioForge.Libs.TagLib.Id3v2;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 
 namespace ParticleSystem
 {
     public partial class View : Form
     {
-        Emitter emitter = new();
+        Emitter emitter;
+        List<Emitter> emitters = new List<Emitter>();
+
+        GravityPoint gravityPoint; 
+        RadarPoint radarPoint;
+
         private GifImage gifImage;
-        //private readonly string filePath = "C:\\niggaDance.gif";
         private readonly string niggaBackground = "niggaDance.gif";
         private readonly string nagievBackground = "nagiev.gif";
         private readonly string chickaBackground = "FujiwaraChicka.gif";
@@ -24,34 +20,59 @@ namespace ParticleSystem
         private readonly string musicPath = "back.mp3.m4a";
         private readonly string dancingMusic = "dancin.mp3";
         private readonly string hayaMusic = "haya.mp3.m4a";
+        private readonly string theWorldMusic = "theWorld.mp3";
         private readonly string tortureDanceMusic = "torture.m4a.mp3.m4a";
 
         private WMPLib.WindowsMediaPlayer music = new WMPLib.WindowsMediaPlayer();
         public View()
         {
             InitializeComponent();
+            picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
+
+            picDisplay.MouseWheel += picDisplay_MouseWheel;
+
+            emitter = new TopEmitter
+            {
+                Width = picDisplay.Width,
+                GravitationY = 0.25f
+            };
+
+            this.emitter = new Emitter 
+            { 
+                Direction = 0,
+                Spreading = 10,
+                SpeedMin = 10,
+                SpeedMax = 10, 
+                ColorFrom = Color.Gold, 
+                ColorTo = Color.FromArgb(0, Color.Red),
+                ParticlesPerTick = 10,
+                X = picDisplay.Width / 2,
+                Y = picDisplay.Height / 2,
+            };
+            emitters.Add(this.emitter);
 
             SetupBackgroudList();
 
             SetMusic(null);
-            backgroudList.SelectedIndex = 0;
-            backgroudList.AllowDrop = false;
-            //SetBackground(null, false);
 
-            picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
-            
 
-            emitter.gravityPoints.Add(new Point(
-            picDisplay.Width / 2, picDisplay.Height / 2
-            ));
-      
-            emitter.gravityPoints.Add(new Point(
-              (int)(picDisplay.Width * 0.75), picDisplay.Height / 2
-            ));
 
-            emitter.gravityPoints.Add(new Point(
-               (int)(picDisplay.Width * 0.25), picDisplay.Height / 2
-            ));
+
+            gravityPoint = new GravityPoint
+            {
+                X = picDisplay.Width / 2 + 100,
+                Y = picDisplay.Height / 2,
+            };
+            radarPoint = new RadarPoint
+            {
+                X = picDisplay.Width / 2 - 100,
+                Y = picDisplay.Height / 2,
+            };
+
+            emitter.impactPoints.Add(gravityPoint);
+            emitter.impactPoints.Add(radarPoint);
+
+
         }
 
         private void SetupBackgroudList()
@@ -155,8 +176,14 @@ namespace ParticleSystem
 
         private new void MouseMove(object sender, MouseEventArgs e)
         {
-            emitter.MousePositionX = e.X;
-            emitter.MousePositionY = e.Y;
+            foreach (var emitter in emitters)
+            {
+                emitter.MousePositionX = e.X;
+                emitter.MousePositionY = e.Y;
+            }
+
+            radarPoint.X = e.X;
+            radarPoint.Y = e.Y;
         }
 
         private void ChooseMusicButtonPressed(object sender, EventArgs e)
@@ -211,6 +238,55 @@ namespace ParticleSystem
                 timer.Interval = 94;
             }
 
+        }
+
+        private void trackBarDirectionChange(object sender, EventArgs e)
+        {
+            emitter.Direction = trackBarDirection.Value;
+            directionLabel.Text = $"Направление : {trackBarDirection.Value}°";
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trackBarPower_Scroll(object sender, EventArgs e)
+        {
+            gravityPoint.Power = trackBarPower.Value;
+            powerLabel.Text = $"Сила гравитации : {trackBarPower.Value}";
+            
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            timer.Interval = trackBarTimer.Value;
+            if (timer.Interval == 1)
+            {
+                WMPLib.WindowsMediaPlayer musicNew = new WMPLib.WindowsMediaPlayer();
+                music.controls.pause();
+                musicNew.URL = theWorldMusic;
+                musicNew.controls.play();
+                timerInterval.Text = $"Частота обновления : 0";
+                timer.Stop();
+                //Stop(4000);
+                music.controls.play();
+            } else
+            {
+                timer.Start();
+            }
+               
+            timerInterval.Text = $"Частота обновления : {timer.Interval}";
+        }
+
+        private void picDisplay_MouseWheel(object sender, MouseEventArgs e)
+        {
+            radarPoint.radius += 1;
+        }
+
+        async void Stop(int time)
+        {
+            await Task.Delay(time).WaitAsync( new System.TimeSpan(time));
         }
     }
 }

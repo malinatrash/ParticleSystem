@@ -34,7 +34,16 @@
             this.ChooseGifButton = new System.Windows.Forms.Button();
             this.ChooseMusicButton = new System.Windows.Forms.Button();
             this.backgroudList = new System.Windows.Forms.ComboBox();
+            this.trackBarDirection = new System.Windows.Forms.TrackBar();
+            this.directionLabel = new System.Windows.Forms.Label();
+            this.powerLabel = new System.Windows.Forms.Label();
+            this.trackBarPower = new System.Windows.Forms.TrackBar();
+            this.trackBarTimer = new System.Windows.Forms.TrackBar();
+            this.timerInterval = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarDirection)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarPower)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarTimer)).BeginInit();
             this.SuspendLayout();
             // 
             // picDisplay
@@ -60,6 +69,7 @@
             // 
             // ChooseGifButton
             // 
+            this.ChooseGifButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ChooseGifButton.Location = new System.Drawing.Point(788, 10);
             this.ChooseGifButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ChooseGifButton.Name = "ChooseGifButton";
@@ -71,6 +81,7 @@
             // 
             // ChooseMusicButton
             // 
+            this.ChooseMusicButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ChooseMusicButton.Location = new System.Drawing.Point(788, 54);
             this.ChooseMusicButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ChooseMusicButton.Name = "ChooseMusicButton";
@@ -82,6 +93,7 @@
             // 
             // backgroudList
             // 
+            this.backgroudList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.backgroudList.FormattingEnabled = true;
             this.backgroudList.Location = new System.Drawing.Point(788, 100);
             this.backgroudList.Name = "backgroudList";
@@ -89,12 +101,87 @@
             this.backgroudList.TabIndex = 3;
             this.backgroudList.SelectedIndexChanged += new System.EventHandler(this.BackgroudListSelectedIndexChanged);
             // 
+            // trackBarDirection
+            // 
+            this.trackBarDirection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.trackBarDirection.Location = new System.Drawing.Point(0, 457);
+            this.trackBarDirection.Maximum = 359;
+            this.trackBarDirection.Name = "trackBarDirection";
+            this.trackBarDirection.Size = new System.Drawing.Size(134, 45);
+            this.trackBarDirection.TabIndex = 4;
+            this.trackBarDirection.Scroll += new System.EventHandler(this.trackBarDirectionChange);
+            // 
+            // directionLabel
+            // 
+            this.directionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.directionLabel.AutoSize = true;
+            this.directionLabel.BackColor = System.Drawing.Color.Transparent;
+            this.directionLabel.Location = new System.Drawing.Point(9, 439);
+            this.directionLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.directionLabel.Name = "directionLabel";
+            this.directionLabel.Size = new System.Drawing.Size(101, 15);
+            this.directionLabel.TabIndex = 5;
+            this.directionLabel.Text = "Направление : 0°";
+            this.directionLabel.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // powerLabel
+            // 
+            this.powerLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.powerLabel.AutoSize = true;
+            this.powerLabel.BackColor = System.Drawing.Color.Transparent;
+            this.powerLabel.Location = new System.Drawing.Point(140, 439);
+            this.powerLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.powerLabel.Name = "powerLabel";
+            this.powerLabel.Size = new System.Drawing.Size(116, 15);
+            this.powerLabel.TabIndex = 6;
+            this.powerLabel.Text = "Сила гравитации : 0";
+            // 
+            // trackBarPower
+            // 
+            this.trackBarPower.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.trackBarPower.Location = new System.Drawing.Point(131, 457);
+            this.trackBarPower.Maximum = 359;
+            this.trackBarPower.Name = "trackBarPower";
+            this.trackBarPower.Size = new System.Drawing.Size(134, 45);
+            this.trackBarPower.TabIndex = 7;
+            this.trackBarPower.Scroll += new System.EventHandler(this.trackBarPower_Scroll);
+            // 
+            // trackBarTimer
+            // 
+            this.trackBarTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.trackBarTimer.Location = new System.Drawing.Point(812, 457);
+            this.trackBarTimer.Maximum = 100;
+            this.trackBarTimer.Minimum = 1;
+            this.trackBarTimer.Name = "trackBarTimer";
+            this.trackBarTimer.Size = new System.Drawing.Size(134, 45);
+            this.trackBarTimer.TabIndex = 8;
+            this.trackBarTimer.Value = 25;
+            this.trackBarTimer.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // timerInterval
+            // 
+            this.timerInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.timerInterval.AutoSize = true;
+            this.timerInterval.BackColor = System.Drawing.Color.Transparent;
+            this.timerInterval.Location = new System.Drawing.Point(805, 439);
+            this.timerInterval.Margin = new System.Windows.Forms.Padding(0);
+            this.timerInterval.Name = "timerInterval";
+            this.timerInterval.Size = new System.Drawing.Size(141, 15);
+            this.timerInterval.TabIndex = 9;
+            this.timerInterval.Text = "Частота обновления : 25";
+            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(944, 501);
+            this.Controls.Add(this.timerInterval);
+            this.Controls.Add(this.trackBarTimer);
+            this.Controls.Add(this.trackBarPower);
+            this.Controls.Add(this.powerLabel);
+            this.Controls.Add(this.directionLabel);
+            this.Controls.Add(this.trackBarDirection);
             this.Controls.Add(this.backgroudList);
             this.Controls.Add(this.ChooseMusicButton);
             this.Controls.Add(this.ChooseGifButton);
@@ -103,7 +190,11 @@
             this.Name = "View";
             this.Text = "ParticleSystem";
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarDirection)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarPower)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarTimer)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -114,5 +205,11 @@
         private Button ChooseGifButton;
         private Button ChooseMusicButton;
         private ComboBox backgroudList;
+        private TrackBar trackBarDirection;
+        private Label directionLabel;
+        private Label powerLabel;
+        private TrackBar trackBarPower;
+        private TrackBar trackBarTimer;
+        private Label timerInterval;
     }
 }
