@@ -10,6 +10,7 @@ namespace ParticleSystem
     {
         public float X;
         public float Y;
+        public Color Color = Color.OrangeRed; 
 
         public abstract void ImpactParticle(Particle particle);
         public virtual void Render(Graphics g)

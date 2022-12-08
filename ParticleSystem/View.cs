@@ -11,11 +11,14 @@ namespace ParticleSystem
         GravityPoint gravityPoint; 
         RadarPoint radarPoint;
 
+        private int selectedBackground = new Random().Next(0, 4);
+
         private GifImage gifImage;
         private readonly string niggaBackground = "niggaDance.gif";
         private readonly string nagievBackground = "nagiev.gif";
         private readonly string chickaBackground = "FujiwaraChicka.gif";
         private readonly string tortureDanceBackground = "tortureDance.gif";
+        private readonly string theWorldBackground = "theWorld.jpeg";
         private readonly string hayaBackground = "haya.gif";
         private readonly string musicPath = "back.mp3.m4a";
         private readonly string dancingMusic = "dancin.mp3";
@@ -31,11 +34,11 @@ namespace ParticleSystem
 
             picDisplay.MouseWheel += picDisplay_MouseWheel;
 
-            emitter = new TopEmitter
-            {
-                Width = picDisplay.Width,
-                GravitationY = 0.25f
-            };
+            //emitter = new TopEmitter
+           // {
+            //    Width = picDisplay.Width,
+             //   GravitationY = 0.25f
+          //  };
 
             this.emitter = new Emitter 
             { 
@@ -52,8 +55,7 @@ namespace ParticleSystem
             emitters.Add(this.emitter);
 
             SetupBackgroudList();
-
-            SetMusic(null);
+            timerInterval.Text = $"Частота обновления : {timer.Interval}";
 
 
 
@@ -82,8 +84,8 @@ namespace ParticleSystem
             backgroudList.Items.Add("Нагиев");
             backgroudList.Items.Add("Чика");
             backgroudList.Items.Add("HEYYEYAAEYAAAEYAEYAA");
-            
-            backgroudList.SelectedIndex = 0;
+
+            backgroudList.SelectedIndex = selectedBackground;
         }
 
         private void SaveToFile(string path)
@@ -209,35 +211,51 @@ namespace ParticleSystem
         {
             if (backgroudList.SelectedIndex == 0)
             {
+                SetupPresetOne();
                 SetBackground(niggaBackground, true);
                 SetMusic(musicPath);
                 timer.Interval = 25;
+                timerInterval.Text = $"Частота обновления : {timer.Interval}";
+                selectedBackground = 0;
             }
             if (backgroudList.SelectedIndex == 1)
             {
                 SetBackground(tortureDanceBackground, false);
                 SetMusic(tortureDanceMusic);
                 timer.Interval = 94;
+                timerInterval.Text = $"Частота обновления : {timer.Interval}";
+                selectedBackground = 1;
             }
             else if (backgroudList.SelectedIndex == 2)
             {
                 SetBackground(nagievBackground, false);
                 SetMusic(musicPath);
                 timer.Interval = 17;
+                timerInterval.Text = $"Частота обновления : {timer.Interval}";
+                selectedBackground = 2;
             }
             else if (backgroudList.SelectedIndex == 3)
             {
                 SetBackground(chickaBackground, false);
                 SetMusic(dancingMusic);
                 timer.Interval = 30;
+                timerInterval.Text = $"Частота обновления : {timer.Interval}";
+                selectedBackground = 3;
             }
             else if (backgroudList.SelectedIndex == 4)
             {
                 SetBackground(hayaBackground, false);
                 SetMusic(hayaMusic);
                 timer.Interval = 94;
+                timerInterval.Text = $"Частота обновления : {timer.Interval}";
+                selectedBackground = 4;
             }
 
+        }
+
+        private void SetupPresetOne()
+        {
+            
         }
 
         private void trackBarDirectionChange(object sender, EventArgs e)
@@ -260,17 +278,24 @@ namespace ParticleSystem
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
+            backgroudList.SelectedIndex = selectedBackground;
+            if (selectedBackground == 1 || selectedBackground == 4)
+            {
+                timer.Interval = 94;
+            } 
+
+            music.controls.play();
             timer.Interval = trackBarTimer.Value;
             if (timer.Interval == 1)
             {
+                timer.Stop();
                 WMPLib.WindowsMediaPlayer musicNew = new WMPLib.WindowsMediaPlayer();
                 music.controls.pause();
+                picDisplay.BackgroundImage = Image.FromFile(theWorldBackground);
                 musicNew.URL = theWorldMusic;
                 musicNew.controls.play();
                 timerInterval.Text = $"Частота обновления : 0";
-                timer.Stop();
-                //Stop(4000);
-                music.controls.play();
+                
             } else
             {
                 timer.Start();
@@ -281,12 +306,30 @@ namespace ParticleSystem
 
         private void picDisplay_MouseWheel(object sender, MouseEventArgs e)
         {
-            radarPoint.radius += 1;
+            if (e.Delta > 0)
+            {
+                radarPoint.ChangeSize(-2);
+            } else if (e.Delta < 0)
+            {
+                radarPoint.ChangeSize(2);
+            }
         }
 
         async void Stop(int time)
         {
             await Task.Delay(time).WaitAsync( new System.TimeSpan(time));
+        }
+
+        private void trackBarParticlesPerTick_Scroll(object sender, EventArgs e)
+        {
+            emitter.ParticlesPerTick = trackBarParticlesPerTick.Value;
+            particlesPerTickLabel.Text = $"Частиц за тик : {trackBarParticlesPerTick.Value}";
+        }
+
+        private void trackBarSpread_Scroll(object sender, EventArgs e)
+        {
+            emitter.Spreading = trackBarSpread.Value;
+            spreadLabel.Text = $"Коэффицент распределения : {trackBarSpread.Value}";
         }
     }
 }

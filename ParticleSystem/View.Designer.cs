@@ -40,10 +40,16 @@
             this.trackBarPower = new System.Windows.Forms.TrackBar();
             this.trackBarTimer = new System.Windows.Forms.TrackBar();
             this.timerInterval = new System.Windows.Forms.Label();
+            this.trackBarParticlesPerTick = new System.Windows.Forms.TrackBar();
+            this.particlesPerTickLabel = new System.Windows.Forms.Label();
+            this.trackBarSpread = new System.Windows.Forms.TrackBar();
+            this.spreadLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarDirection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPower)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTimer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarParticlesPerTick)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarSpread)).BeginInit();
             this.SuspendLayout();
             // 
             // picDisplay
@@ -141,6 +147,7 @@
             this.trackBarPower.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.trackBarPower.Location = new System.Drawing.Point(131, 457);
             this.trackBarPower.Maximum = 359;
+            this.trackBarPower.Minimum = -359;
             this.trackBarPower.Name = "trackBarPower";
             this.trackBarPower.Size = new System.Drawing.Size(134, 45);
             this.trackBarPower.TabIndex = 7;
@@ -170,12 +177,63 @@
             this.timerInterval.TabIndex = 9;
             this.timerInterval.Text = "Частота обновления : 25";
             // 
+            // trackBarParticlesPerTick
+            // 
+            this.trackBarParticlesPerTick.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.trackBarParticlesPerTick.Location = new System.Drawing.Point(262, 457);
+            this.trackBarParticlesPerTick.Maximum = 100;
+            this.trackBarParticlesPerTick.Name = "trackBarParticlesPerTick";
+            this.trackBarParticlesPerTick.Size = new System.Drawing.Size(134, 45);
+            this.trackBarParticlesPerTick.TabIndex = 10;
+            this.trackBarParticlesPerTick.Value = 1;
+            this.trackBarParticlesPerTick.Scroll += new System.EventHandler(this.trackBarParticlesPerTick_Scroll);
+            // 
+            // particlesPerTickLabel
+            // 
+            this.particlesPerTickLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.particlesPerTickLabel.AutoSize = true;
+            this.particlesPerTickLabel.BackColor = System.Drawing.Color.Transparent;
+            this.particlesPerTickLabel.Location = new System.Drawing.Point(280, 439);
+            this.particlesPerTickLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.particlesPerTickLabel.Name = "particlesPerTickLabel";
+            this.particlesPerTickLabel.Size = new System.Drawing.Size(96, 15);
+            this.particlesPerTickLabel.TabIndex = 11;
+            this.particlesPerTickLabel.Text = "Частиц за тик : 1";
+            // 
+            // trackBarSpread
+            // 
+            this.trackBarSpread.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.trackBarSpread.Location = new System.Drawing.Point(392, 457);
+            this.trackBarSpread.Maximum = 359;
+            this.trackBarSpread.Name = "trackBarSpread";
+            this.trackBarSpread.Size = new System.Drawing.Size(179, 45);
+            this.trackBarSpread.TabIndex = 12;
+            this.trackBarSpread.Value = 1;
+            this.trackBarSpread.Scroll += new System.EventHandler(this.trackBarSpread_Scroll);
+            // 
+            // spreadLabel
+            // 
+            this.spreadLabel.AllowDrop = true;
+            this.spreadLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.spreadLabel.AutoSize = true;
+            this.spreadLabel.BackColor = System.Drawing.Color.Transparent;
+            this.spreadLabel.Location = new System.Drawing.Point(392, 439);
+            this.spreadLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.spreadLabel.Name = "spreadLabel";
+            this.spreadLabel.Size = new System.Drawing.Size(179, 15);
+            this.spreadLabel.TabIndex = 13;
+            this.spreadLabel.Text = "Коэффицент распределения : 0";
+            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(944, 501);
+            this.Controls.Add(this.spreadLabel);
+            this.Controls.Add(this.trackBarSpread);
+            this.Controls.Add(this.particlesPerTickLabel);
+            this.Controls.Add(this.trackBarParticlesPerTick);
             this.Controls.Add(this.timerInterval);
             this.Controls.Add(this.trackBarTimer);
             this.Controls.Add(this.trackBarPower);
@@ -193,6 +251,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarDirection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPower)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTimer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarParticlesPerTick)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarSpread)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -211,5 +271,9 @@
         private TrackBar trackBarPower;
         private TrackBar trackBarTimer;
         private Label timerInterval;
+        private TrackBar trackBarParticlesPerTick;
+        private Label particlesPerTickLabel;
+        private TrackBar trackBarSpread;
+        private Label spreadLabel;
     }
 }

@@ -27,13 +27,23 @@ namespace ParticleSystem
 
         public override void Render(Graphics g)
         {
+            
+            Pen pen = new Pen(Color.DeepSkyBlue);
+            pen.Width = 4;
+            if (Power < 0)
+            {
+                pen.Color = Color.Black;
+            } else
+            {
+                pen.Color = Color.White;    
+            }
             g.DrawEllipse(
-                   new Pen(Color.White),
-                   X - Power / 2,
-                   Y - Power / 2,
-                   Power,
-                   Power
-               );
+               pen,
+               X + Math.Abs(Power) / 2,
+               Y + Math.Abs(Power) / 2,
+               - Math.Abs(Power),
+               - Math.Abs(Power)
+           );
         }
     }
 }
