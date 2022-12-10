@@ -12,14 +12,29 @@ namespace ParticleSystem
 
         public override void ImpactParticle(Particle particle)
         {
-            float gX = X - particle.X;
-            float gY = Y - particle.Y;
+            float gX;
+            float gY;
+            float r2;
+            if (Power < 0)
+            {
+                gX = X - particle.X;
+                gY = Y - particle.Y;
+                r2 = (float)Math.Max(100, gX * gX + gY * gY);
+
+                particle.SpeedX -= gX * Math.Abs(Power) / r2;
+                particle.SpeedY -= gY * Math.Abs(Power) / r2;
+
+                return;
+            }
+
+             gX = X - particle.X;
+             gY = Y - particle.Y;
 
             double r = Math.Sqrt(gX * gX + gY * gY); 
             if (r + particle.Radius < Power / 2) 
             {
                 
-                float r2 = (float)Math.Max(100, gX * gX + gY * gY);
+                 r2 = (float)Math.Max(100, gX * gX + gY * gY);
                 particle.SpeedX += gX * Power / r2;
                 particle.SpeedY += gY * Power / r2;
             }

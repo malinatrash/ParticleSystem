@@ -1,3 +1,5 @@
+using Gst;
+using Pango;
 using System.Runtime.Serialization.Formatters.Binary;
 
 
@@ -7,15 +9,14 @@ namespace ParticleSystem
     {
         Emitter emitter;
         List<Emitter> emitters = new List<Emitter>();
-
-        GravityPoint gravityPoint; 
-        RadarPoint radarPoint;
+        List<GravityPoint> gravityPoints = new();
+        private RadarPoint radarPoint;
 
         private int selectedBackground = new Random().Next(0, 4);
 
         private GifImage gifImage;
         private readonly string niggaBackground = "niggaDance.gif";
-        private readonly string nagievBackground = "nagiev.gif";
+        private readonly string mazikBackground = "mazik.gif";
         private readonly string chickaBackground = "FujiwaraChicka.gif";
         private readonly string tortureDanceBackground = "tortureDance.gif";
         private readonly string theWorldBackground = "theWorld.jpeg";
@@ -23,6 +24,7 @@ namespace ParticleSystem
         private readonly string musicPath = "back.mp3.m4a";
         private readonly string dancingMusic = "dancin.mp3";
         private readonly string hayaMusic = "haya.mp3.m4a";
+        private readonly string mazikMusic = "mazik.mp3.m4a";
         private readonly string theWorldMusic = "theWorld.mp3";
         private readonly string tortureDanceMusic = "torture.m4a.mp3.m4a";
 
@@ -32,48 +34,85 @@ namespace ParticleSystem
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
 
-            picDisplay.MouseWheel += picDisplay_MouseWheel;
-
-            //emitter = new TopEmitter
-           // {
-            //    Width = picDisplay.Width,
-             //   GravitationY = 0.25f
-          //  };
-
-            this.emitter = new Emitter 
-            { 
+            emitter = new Emitter
+            {
                 Direction = 0,
                 Spreading = 10,
                 SpeedMin = 10,
-                SpeedMax = 10, 
-                ColorFrom = Color.Gold, 
-                ColorTo = Color.FromArgb(0, Color.Red),
+                SpeedMax = 10,
+                ColorFrom = System.Drawing.Color.Green,
+                ColorTo = System.Drawing.Color.FromArgb(0, System.Drawing.Color.Lavender),
                 ParticlesPerTick = 10,
                 X = picDisplay.Width / 2,
                 Y = picDisplay.Height / 2,
             };
+
             emitters.Add(this.emitter);
 
-            SetupBackgroudList();
-            timerInterval.Text = $"Частота обновления : {timer.Interval}";
-
-
-
-
-            gravityPoint = new GravityPoint
+            emitters.Add(new Emitter
             {
-                X = picDisplay.Width / 2 + 100,
+                Direction = 180,
+                Spreading = 10,
+                SpeedMin = 10,
+                SpeedMax = 10,
+                ColorFrom = System.Drawing.Color.Gold,
+                ColorTo = System.Drawing.Color.FromArgb(0, System.Drawing.Color.Red),
+                ParticlesPerTick = 10,
+                X = picDisplay.Width - 50,
                 Y = picDisplay.Height / 2,
+            });
+
+            emitter = new TopEmitter
+            {
+                Width = picDisplay.Width,
+                GravitationY = 0.25f
             };
+
             radarPoint = new RadarPoint
             {
                 X = picDisplay.Width / 2 - 100,
                 Y = picDisplay.Height / 2,
             };
 
-            emitter.impactPoints.Add(gravityPoint);
+
+            emitter.impactPoints.Add(
+                new CountPoint
+                {
+                    X = 100,
+                    Y = picDisplay.Height - 200
+                }
+            );
+
+            emitter.impactPoints.Add(
+                new CountPoint
+                {
+                    X = 350,
+                    Y = picDisplay.Height - 150
+                }
+            );
+
+            emitter.impactPoints.Add(
+                new CountPoint
+                {
+                    X = 600,
+                    Y = picDisplay.Height - 150
+                }
+            );
+
+            emitter.impactPoints.Add(
+                new CountPoint
+                {
+                    X = 850,
+                    Y = picDisplay.Height - 200
+                }
+            );
+
             emitter.impactPoints.Add(radarPoint);
 
+            picDisplay.MouseWheel += picDisplay_MouseWheel;
+
+            SetupBackgroudList();
+            timerInterval.Text = $"Частота обновления : {timer.Interval}";
 
         }
 
@@ -81,7 +120,7 @@ namespace ParticleSystem
         {
             backgroudList.Items.Add("1 + 1");
             backgroudList.Items.Add("Torture dance");
-            backgroudList.Items.Add("Нагиев");
+            backgroudList.Items.Add("Майонез");
             backgroudList.Items.Add("Чика");
             backgroudList.Items.Add("HEYYEYAAEYAAAEYAEYAA");
 
@@ -105,7 +144,7 @@ namespace ParticleSystem
             BinaryFormatter formatter = new BinaryFormatter();
             using (FileStream fs = new FileStream($"{path}.gi", FileMode.OpenOrCreate))
             {
-                
+
                 list = (List<Image>)formatter.Deserialize(fs);
             }
             return list;
@@ -118,17 +157,19 @@ namespace ParticleSystem
             picDisplay.SizeMode = PictureBoxSizeMode.StretchImage;
             if (file == null)
             {
-                if (File.Exists(niggaBackground+".gi"))
+                if (File.Exists(niggaBackground + ".gi"))
                 {
                     gifImage = new GifImage(LoadFromFile(niggaBackground), niggaBackground);
                     gifImage.ReverseAtEnd = isReversed;
-                } else
+                }
+                else
                 {
                     gifImage = new GifImage(niggaBackground);
                     gifImage.ReverseAtEnd = isReversed;
                     SaveToFile(niggaBackground);
                 }
-            } else
+            }
+            else
             {
                 if (File.Exists(file + ".gi"))
                 {
@@ -142,7 +183,7 @@ namespace ParticleSystem
                     SaveToFile(file);
                 }
             }
-           
+
         }
 
         private void SetMusic(string? file)
@@ -151,12 +192,13 @@ namespace ParticleSystem
             {
                 music.URL = musicPath;
                 music.controls.play();
-            } else
+            }
+            else
             {
                 music.controls.stop();
                 music.URL = file;
                 music.controls.play();
-                
+
             }
         }
 
@@ -168,12 +210,10 @@ namespace ParticleSystem
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
-                g.Clear(Color.FromArgb(0, 0, 0, 0));
+                g.Clear(System.Drawing.Color.FromArgb(0, 0, 0, 0));
                 emitter.Render(g);
             }
-            picDisplay.Invalidate(); 
-
-            
+            picDisplay.Invalidate();
         }
 
         private new void MouseMove(object sender, MouseEventArgs e)
@@ -211,7 +251,6 @@ namespace ParticleSystem
         {
             if (backgroudList.SelectedIndex == 0)
             {
-                SetupPresetOne();
                 SetBackground(niggaBackground, true);
                 SetMusic(musicPath);
                 timer.Interval = 25;
@@ -228,8 +267,8 @@ namespace ParticleSystem
             }
             else if (backgroudList.SelectedIndex == 2)
             {
-                SetBackground(nagievBackground, false);
-                SetMusic(musicPath);
+                SetBackground(mazikBackground, false);
+                SetMusic(mazikMusic);
                 timer.Interval = 17;
                 timerInterval.Text = $"Частота обновления : {timer.Interval}";
                 selectedBackground = 2;
@@ -253,11 +292,6 @@ namespace ParticleSystem
 
         }
 
-        private void SetupPresetOne()
-        {
-            
-        }
-
         private void trackBarDirectionChange(object sender, EventArgs e)
         {
             emitter.Direction = trackBarDirection.Value;
@@ -271,9 +305,12 @@ namespace ParticleSystem
 
         private void trackBarPower_Scroll(object sender, EventArgs e)
         {
-            gravityPoint.Power = trackBarPower.Value;
+            foreach (GravityPoint gravityPoint in gravityPoints)
+            {
+                gravityPoint.Power = trackBarPower.Value;
+            }
+
             powerLabel.Text = $"Сила гравитации : {trackBarPower.Value}";
-            
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -282,7 +319,7 @@ namespace ParticleSystem
             if (selectedBackground == 1 || selectedBackground == 4)
             {
                 timer.Interval = 94;
-            } 
+            }
 
             music.controls.play();
             timer.Interval = trackBarTimer.Value;
@@ -295,12 +332,13 @@ namespace ParticleSystem
                 musicNew.URL = theWorldMusic;
                 musicNew.controls.play();
                 timerInterval.Text = $"Частота обновления : 0";
-                
-            } else
+
+            }
+            else
             {
                 timer.Start();
             }
-               
+
             timerInterval.Text = $"Частота обновления : {timer.Interval}";
         }
 
@@ -309,16 +347,13 @@ namespace ParticleSystem
             if (e.Delta > 0)
             {
                 radarPoint.ChangeSize(-2);
-            } else if (e.Delta < 0)
+            }
+            else if (e.Delta < 0)
             {
                 radarPoint.ChangeSize(2);
             }
         }
 
-        async void Stop(int time)
-        {
-            await Task.Delay(time).WaitAsync( new System.TimeSpan(time));
-        }
 
         private void trackBarParticlesPerTick_Scroll(object sender, EventArgs e)
         {
@@ -330,6 +365,20 @@ namespace ParticleSystem
         {
             emitter.Spreading = trackBarSpread.Value;
             spreadLabel.Text = $"Коэффицент распределения : {trackBarSpread.Value}";
+        }
+
+        private void PicDisplayClick(object sender, EventArgs e)
+        {
+            var x = Cursor.Position.X;
+            var y = Cursor.Position.Y;
+            GravityPoint point = new GravityPoint
+            {
+                X = x - Math.Abs(trackBarPower.Value),
+                Y = y - Math.Abs(trackBarPower.Value),
+            };
+            point.Power = trackBarPower.Value;
+            gravityPoints.Add(point);
+            emitter.impactPoints.Add(point);
         }
     }
 }

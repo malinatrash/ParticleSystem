@@ -65,6 +65,7 @@
             this.picDisplay.Size = new System.Drawing.Size(946, 502);
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
+            this.picDisplay.Click += new System.EventHandler(this.PicDisplayClick);
             this.picDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseMove);
             // 
             // timer
@@ -138,9 +139,9 @@
             this.powerLabel.Location = new System.Drawing.Point(140, 439);
             this.powerLabel.Margin = new System.Windows.Forms.Padding(0);
             this.powerLabel.Name = "powerLabel";
-            this.powerLabel.Size = new System.Drawing.Size(116, 15);
+            this.powerLabel.Size = new System.Drawing.Size(128, 15);
             this.powerLabel.TabIndex = 6;
-            this.powerLabel.Text = "Сила гравитации : 0";
+            this.powerLabel.Text = "Сила гравитации : 100";
             // 
             // trackBarPower
             // 
@@ -151,6 +152,7 @@
             this.trackBarPower.Name = "trackBarPower";
             this.trackBarPower.Size = new System.Drawing.Size(134, 45);
             this.trackBarPower.TabIndex = 7;
+            this.trackBarPower.Value = 100;
             this.trackBarPower.Scroll += new System.EventHandler(this.trackBarPower_Scroll);
             // 
             // trackBarTimer
