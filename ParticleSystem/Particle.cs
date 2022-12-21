@@ -42,8 +42,6 @@ namespace ParticleSystem
 
             b.Dispose();
         }
-
-     
     }
 
     public class ParticleColorful : Particle

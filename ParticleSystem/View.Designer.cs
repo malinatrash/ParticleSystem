@@ -44,6 +44,7 @@
             this.particlesPerTickLabel = new System.Windows.Forms.Label();
             this.trackBarSpread = new System.Windows.Forms.TrackBar();
             this.spreadLabel = new System.Windows.Forms.Label();
+            this.debugLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarDirection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPower)).BeginInit();
@@ -65,7 +66,7 @@
             this.picDisplay.Size = new System.Drawing.Size(946, 502);
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
-            this.picDisplay.Click += new System.EventHandler(this.PicDisplayClick);
+            this.picDisplay.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MouseClick);
             this.picDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseMove);
             // 
             // timer
@@ -226,12 +227,21 @@
             this.spreadLabel.TabIndex = 13;
             this.spreadLabel.Text = "Коэффицент распределения : 0";
             // 
+            // debugLabel
+            // 
+            this.debugLabel.AutoSize = true;
+            this.debugLabel.Location = new System.Drawing.Point(860, 415);
+            this.debugLabel.Name = "debugLabel";
+            this.debugLabel.Size = new System.Drawing.Size(0, 15);
+            this.debugLabel.TabIndex = 14;
+            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(944, 501);
+            this.Controls.Add(this.debugLabel);
             this.Controls.Add(this.spreadLabel);
             this.Controls.Add(this.trackBarSpread);
             this.Controls.Add(this.particlesPerTickLabel);
@@ -277,5 +287,6 @@
         private Label particlesPerTickLabel;
         private TrackBar trackBarSpread;
         private Label spreadLabel;
+        private Label debugLabel;
     }
 }

@@ -25,19 +25,26 @@ namespace ParticleSystem
         }
         public override void Render(Graphics g)
         {
-            g.DrawEllipse( 
-                 new Pen(Color.OrangeRed, 2),
-                 X - Radius / 2,
-                 Y - Radius / 2,
-                 Radius,
-                 Radius);
+            var b = new SolidBrush(Color.OrangeRed);
+            g.FillEllipse(b, X - Radius / 2, Y - Radius / 2, Radius, Radius);
+
+            Pen pen = new Pen(Color.White);
+            pen.Width = 4;
+            Font font = new Font("Verdana", 15, FontStyle.Bold);
+            g.DrawEllipse(
+                   pen,
+                   X - Radius / 2,
+                   Y - Radius / 2,
+                  Radius,
+                  Radius
+               );
             var stringFormat = new StringFormat(); 
             stringFormat.Alignment = StringAlignment.Center; 
             stringFormat.LineAlignment = StringAlignment.Center; 
             g.DrawString(
                  $"{Count}",
-                 new Font("Verdana", 14),
-                 new SolidBrush(Color.OrangeRed),
+                 font,
+                 new SolidBrush(Color.White),
                  X, Y, stringFormat);
         }
     }

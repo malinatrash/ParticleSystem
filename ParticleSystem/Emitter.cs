@@ -9,7 +9,7 @@ namespace ParticleSystem
     public class Emitter
     {
         List<Particle> particles = new List<Particle>();
-        public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
+        public static List<IImpactPoint> impactPoints = new List<IImpactPoint>();
 
         public int ParticlesCount = 500;
 
@@ -30,16 +30,18 @@ namespace ParticleSystem
         public int LifeMin = 20; 
         public int LifeMax = 100;
 
+        public List<Particle> Particles = new List<Particle>();
+
         public int ParticlesPerTick = 1;
 
-        public Color ColorFrom = Color.White; 
-        public Color ColorTo = Color.FromArgb(0, Color.Black);
+        public Color ColorFrom; 
+        public Color ColorTo;
         public virtual Particle CreateParticle()
         {
             var particle = new ParticleColorful();
             particle.FromColor = ColorFrom;
             particle.ToColor = ColorTo;
-
+            particles.Add(particle);
             return particle;
         }
 
